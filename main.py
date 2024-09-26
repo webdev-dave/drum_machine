@@ -15,10 +15,14 @@ label_font = pygame.font.Font('freesansbold.ttf', 32)
 
 fps = 60
 timer = pygame.time.Clock()
+beats = 8
+instrumentRows = 6
+sideMenuWidth = 200
+bottomMenuHeight = 200
 
 def draw_grid():
-    left_box = pygame.draw.rect(screen, gray, (0, 0, 200, HEIGHT - 200), 5)
-    bottom_box = pygame.draw.rect(screen, gray, (0, HEIGHT - 200, WIDTH, 200), 5)
+    left_box = pygame.draw.rect(screen, gray, (0, 0, sideMenuWidth, HEIGHT - bottomMenuHeight), 5)
+    bottom_box = pygame.draw.rect(screen, gray, (0, HEIGHT - bottomMenuHeight, WIDTH, bottomMenuHeight), 5)
     boxes = []
     colors = [gray, white, gray]
     hi_hat_text = label_font.render('Hi Hat', True, white)
@@ -33,9 +37,14 @@ def draw_grid():
     screen.blit(clap_text, (30, 430))
     floor_tom_text = label_font.render('Floor Tom', True, white)
     screen.blit(floor_tom_text, (30, 530))
-    # draw border lines between racks/channels
+    # draw border lines between horizontal racks/channels
     for i in range(6):
-       pygame.draw.line(screen, gray, (0, (100 * i)+100), (199, (100 * i)+100), 3)
+       pygame.draw.line(screen, gray, (0, (100 * i)+100), (sideMenuWidth-1, (100 * i)+100), 3)
+    # draw in boxes
+    for i in range(beats):
+        for j in range(instrumentRows):
+            rect = pygame.draw.rect(screen, gray, [i * ((WIDTH - sideMenuWidth) // beats) + (sideMenuWidth), (j * 100), (WIDTH - sideMenuWidth)//beats, ((HEIGHT - bottomMenuHeight)//instrumentRows)], 5, 5)
+
 
 run = True
 while run:
